@@ -1,0 +1,22 @@
+{
+  "name": "moments",
+  "version": "1.0.0",
+  "description": "A blog-like project using B/S structure",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MarkGuo1998/moments.git"
+  },
+  "author": "Mark Guo, Steven Zhao",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MarkGuo1998/moments/issues"
+  },
+  "homepage": "https://github.com/MarkGuo1998/moments#readme"
+}
