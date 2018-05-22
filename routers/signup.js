@@ -20,10 +20,10 @@ let user = {
     password: ctx.request.body.password,
     repeatpass: ctx.request.body.repeatpass,
 }
-console.log(user.name);
+//console.log(user.name);
 await userModel.findDataByName(user.name)
     .then(async (result) => {
-        console.log(result)
+        //console.log(result)
         if (result.length) {
             try {
                 throw Error('用户已经存在')

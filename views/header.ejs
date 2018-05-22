@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>koa2-blog</title>
-	<!--link rel="stylesheet" href="/index.css"-->
+	<link rel="stylesheet" href="/index.css">
 	<script src="http://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 	<script>
 		function fade(txt){
@@ -42,12 +42,13 @@
 </head>
 <body>
 	<header>
-		<div class="user_name">
+		<div class="user_name" style="text-align: center;">
 			<% if(session.user){ %>
 				 Hello,<%= session.user %>
 			<% } %>
 			<% if(!session.user){ %>
-				欢迎注册登录^_^
+            欢迎注册登录^_^
+            
 			<% } %>
 		</div>
 		<div class="message">登录成功</div>
