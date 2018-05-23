@@ -77,3 +77,38 @@ router.post('/create', async(ctx, next) => {
             })
 
 })
+
+// 单篇文章页
+router.get('/moments/:postId', async(ctx, next) => {
+    let comment_res,
+        res,
+        pageOne,
+        res_pv; 
+    await userModel.findDataById(ctx.params.postId)
+        .then(result => {
+            //console.log(result )
+            res = result
+            res_pv = parseInt(result[0]['pv'])
+            res_pv += 1
+           // console.log(res_pv)
+        })
+    await userModel.updatePostPv([res_pv, ctx.params.postId])
+    await userModel.findCommentByPage(1,ctx.params.postId)
+        .then(result => {
+            pageOne = result
+            //console.log('comment', comment_res)
+        })
+    await userModel.findCommentById(ctx.params.postId)
+        .then(result => {
+            comment_res = result
+            //console.log('comment', comment_res)
+        })
+    await ctx.render('sPost', {
+        session: ctx.session,
+        posts: res[0],
+        commentLenght: comment_res.length,
+        commentPageLenght: Math.ceil(comment_res.length/10),
+        pageOne:pageOne
+    })
+
+})
