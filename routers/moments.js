@@ -1,15 +1,14 @@
 const router = require('koa-router')();
 const userModel = require('../lib/mysql.js')
-const moment = require('moment')
 const checkNotLogin = require('../middlewares/check.js').checkNotLogin
 const checkLogin = require('../middlewares/check.js').checkLogin;
 const md = require('markdown-it')();  
 // 重置到文章页
 router.get('/', async(ctx, next) => {
-    ctx.redirect('/posts')
+    ctx.redirect('/moments')
 })
-// 文章页
-router.get('/posts', async(ctx, next) => {
+// 
+router.get('/moments', async(ctx, next) => {
     let res,
         postsLength,
         name = decodeURIComponent(ctx.request.querystring.split('=')[1]);
