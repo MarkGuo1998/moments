@@ -21,7 +21,7 @@ let user = {
     repeatpass: ctx.request.body.repeatpass,
 }
 //console.log(user.name);
-await userModel.findDataByName(user.name)
+await userModel.findUserByName(user.name)
     .then(async (result) => {
         //console.log(result)
         if (result.length) {
@@ -43,7 +43,7 @@ await userModel.findDataByName(user.name)
         } else {
             // ctx.session.user=ctx.request.body.name   
             let getName = Number(Math.random().toString().substr(3)).toString(36) + Date.now()  
-            await userModel.insertData([user.name, md5(user.password), getName])
+            await userModel.signUp([user.name, md5(user.password), getName])
                 .then(res=>{
                     console.log('注册成功',res)
                     //注册成功

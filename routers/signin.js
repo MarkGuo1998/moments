@@ -14,7 +14,7 @@ router.post('/signin', async(ctx, next) => {
     let name = ctx.request.body.name;
     let pass = ctx.request.body.password;
     
-    await userModel.findDataByName(name)
+    await userModel.findUserByName(name)
         .then(result => {
             let res = result
             if (name === res[0]['name'] && md5(pass) === res[0]['password']) {
