@@ -54,3 +54,27 @@ router.post('/moments/self', async(ctx, next) => {
         })  
 })
 module.exports = router
+
+// 发表文章页面
+router.get('/create', async(ctx, next) => {
+    await ctx.render('create', {
+        session: ctx.session,
+    })
+})
+
+// post 发表文章
+router.post('/create', async(ctx, next) => {
+    let content = ctx.request.body.content,
+        id = ctx.session.id,
+        uid = ctx.session.uid;
+    
+    
+    await userModel.insertMoment([id, content, uid])
+            .then(() => {
+                ctx.body = true
+            }).catch(() => {
+                console.log("!")
+                ctx.body = false
+            })
+
+})
