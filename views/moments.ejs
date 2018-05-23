@@ -4,9 +4,7 @@
 			<% posts.forEach(function(res){ %>
 				<li>
 					<div class="author">
-						<span title="<%= res.name %>"><a href="/posts?author=<%= res.name %> ">author: <%= res.name %></a></span>
-						<span>评论数：<%= res.comments %></span>
-						<span>浏览量：<%= res.pv %></span>
+						<span title="<%= res.uid %>"><a href="/posts?author=<%= res.uid %> ">author: <%= res.uid %></a></span>
 					</div>
 					<div class="comment_pv">
 						<span><%= res.moment %></span>
@@ -42,9 +40,9 @@
                         $('.posts').append(
                             '<li>'+
                             '<div class=\"author\">'+
-                            '<span title=\"'+ val.name +'\"><a href=\"/moments?author='+ val.name +' \">author: '+ val.name +'</a></span>'+
-                            '<span>评论数：'+ val.comments +'</span>'+
-                            '<span>浏览量：'+ val.pv +'</span>'+
+                            '<span title=\"'+ val.uid +'\"><a href=\"/moments?author='+ val.uid +' \">author: '+ val.uid +'</a></span>'+
+                            //'<span>评论数：'+ val.comments +'</span>'+
+                            //'<span>浏览量：'+ val.pv +'</span>'+
                             '</div>'+
                             '<div class=\"comment_pv\">'+
                             '<span>'+ val.moment +'</span>'+
