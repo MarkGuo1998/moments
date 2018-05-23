@@ -32,7 +32,7 @@ router.get('/moments', async(ctx, next) => {
         })
     }
 })
-// 首页分页，每次输出10条
+// 首页
 router.post('/moments', async(ctx, next) => {
     await userModel.findAllMoments()
             .then(result=>{
@@ -42,7 +42,7 @@ router.post('/moments', async(ctx, next) => {
             ctx.body = 'error'
         })  
 })
-// 个人文章分页，每次输出10条
+// 个人文章
 router.post('/moments/self', async(ctx, next) => {
     let name = ctx.request.body.name
     await userModel.findMomentsByName(name)

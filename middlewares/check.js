@@ -2,7 +2,7 @@ module.exports ={
   // 已经登录了
   checkNotLogin: (ctx) => {
     if (ctx.session && ctx.session.user) {     
-      ctx.redirect('/posts');
+      ctx.redirect('/moments');
       return false;
     }
     return true;
