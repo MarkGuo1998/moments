@@ -28,7 +28,7 @@
 						if (msg) {
 							fade('登出成功')
 							setTimeout(()=>{
-								window.location.href = "/posts"
+								window.location.href = "/moments"
 							},1500)	
 						}
 					},
@@ -57,14 +57,14 @@
 				<div class="has_user">
 					<a target="__blank" href="https://github.com/wclimb/Koa2-blog">GitHub</a>
 					<% if(type == 'all'){ %>
-						<a class="active" href="/posts">全部文章</a>
+						<a class="active" href="/moments">全部文章</a>
 					<% }else{ %>
-						<a href="/posts">全部文章</a>
+						<a href="/moments">全部文章</a>
 					<% }%>
 					<% if(type == 'my'){ %>
-						<a class="active" href="/posts?author=<%= session.user %>">我的文章</a>
+						<a class="active" href="/moments?author=<%= session.user %>">我的文章</a>
 					<% }else{ %>
-						<a href="/posts?author=<%= session.user %>">我的文章</a>
+						<a href="/moments?author=<%= session.user %>">我的文章</a>
 					<% }%>
 					<% if(type == 'create'){ %>
 						<a class="active" href="/create">发表文章</a>
@@ -79,9 +79,9 @@
 				<div class="none_user has_user">
 					<a target="__blank" href="https://github.com/wclimb/Koa2-blog">GitHub</a>
 					<% if(type == 'all'){ %>
-						<a class="active" href="/posts">全部文章</a>
+						<a class="active" href="/moments">全部文章</a>
 					<% }else{ %>
-						<a href="/posts">全部文章</a>
+						<a href="/moments">全部文章</a>
 					<% }%>
 					<% if(type == 'signup'){ %>
 						<a class="active" href="/signup">注册</a>

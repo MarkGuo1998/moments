@@ -2,7 +2,6 @@ const router = require('koa-router')();
 const userModel = require('../lib/mysql.js')
 const checkNotLogin = require('../middlewares/check.js').checkNotLogin
 const checkLogin = require('../middlewares/check.js').checkLogin;
-const md = require('markdown-it')();  
 // 重置到文章页
 router.get('/', async(ctx, next) => {
     ctx.redirect('/moments')
@@ -14,42 +13,28 @@ router.get('/moments', async(ctx, next) => {
         name = decodeURIComponent(ctx.request.querystring.split('=')[1]);
     if (ctx.request.querystring) {
         console.log('ctx.request.querystring', name)
-        await userModel.findDataByUser(name)
-            .then(result => {
-                postsLength = result.length
-            })
-        await userModel.findPostByUserPage(name,1)
+        await userModel.findMomentsByName(name)
             .then(result => {
                 res = result
             })
-        await ctx.render('selfPosts', {
+        await ctx.render('selfMoments', {
             session: ctx.session,
-            posts: res,
-            postsPageLength:Math.ceil(postsLength / 10),
+            posts: res
         })
     } else {
-        await userModel.findPostByPage(1)
-            .then(result => {
-                //console.log(result)
-                res = result
-            })
-        await userModel.findAllPost()
+        await userModel.findAllMoments()
             .then(result=>{
-                postsLength = result.length
+                res = result
             })    
-        await ctx.render('posts', {
+        await ctx.render('moments', {
             session: ctx.session,
-            posts: res,
-            postsLength: postsLength,
-            postsPageLength: Math.ceil(postsLength / 10),
-            
+            posts: res
         })
     }
 })
 // 首页分页，每次输出10条
-router.post('/posts/page', async(ctx, next) => {
-    let page = ctx.request.body.page;
-    await userModel.findPostByPage(page)
+router.post('/moments', async(ctx, next) => {
+    await userModel.findAllMoments()
             .then(result=>{
                 //console.log(result)
                 ctx.body = result   
@@ -58,9 +43,9 @@ router.post('/posts/page', async(ctx, next) => {
         })  
 })
 // 个人文章分页，每次输出10条
-router.post('/posts/self/page', async(ctx, next) => {
-    let data = ctx.request.body
-    await userModel.findPostByUserPage(data.name,data.page)
+router.post('/moments/self', async(ctx, next) => {
+    let name = ctx.request.body.name
+    await userModel.findMomentsByName(name)
             .then(result=>{
                 //console.log(result)
                 ctx.body = result   
