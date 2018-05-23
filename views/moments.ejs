@@ -34,7 +34,7 @@
             },
             cache: false,
             success: function (msg) {
-                console.log(msg)
+                console.log("msg!, "+msg)
                 if (msg != 'error') {
                     $('.posts').html(' ')
                     $.each(msg,function(i,val){
@@ -51,7 +51,6 @@
                             '</div>'+
                             '<a href=\"/moments/'+ val.id +'\">'+
                             '<div class=\"title\">'+
-                            '<img class="userAvator" src="images/'+ val.avator +'.png">'+
                             val.title +
                             '</div>'+
                             '<div class=\"content\">'+

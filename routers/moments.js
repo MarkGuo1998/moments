@@ -65,11 +65,10 @@ router.get('/create', async(ctx, next) => {
 // post 发表文章
 router.post('/create', async(ctx, next) => {
     let content = ctx.request.body.content,
-        id = ctx.session.id,
-        uid = ctx.session.uid;
+        uid = ctx.session.id
     
-    
-    await userModel.insertMoment([id, content, uid])
+    console.log([content, uid])
+    await userModel.insertMoment([content, uid])
             .then(() => {
                 ctx.body = true
             }).catch(() => {
