@@ -6,14 +6,14 @@ const checkLogin = require('../middlewares/check.js').checkLogin
 // const moment = require('moment');
 const fs = require('fs')
 // 
-router.get('/newfriends', async(ctx, next) => {
+router.get('/acceptfriends', async(ctx, next) => {
     //await checkNotLogin(ctx)
     await ctx.render('newfriends', {
         session: ctx.session,
     })
 })
 // post 添加好友请求
-router.post('/newfriends/submit', async(ctx, next) => {
+router.post('/acceptfriends/submit', async(ctx, next) => {
 //console.log(ctx.request.body)
     let user = {
         friendname: ctx.request.body.friendname,

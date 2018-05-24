@@ -22,7 +22,7 @@
 		$('.submit').click(()=>{
 			// console.log($('.form').serialize())
 			$.ajax({
-				url: "/newfriends/submit",
+				url: "/acceptfriends/submit",
 				data: {
 					friendname: $('input[name=friendname]').val(),
 					greeting: $('input[name=greeting]').val()
