@@ -4,7 +4,7 @@
 			<% posts.forEach(function(res){ %>
 				<li>
 					<div class="author">
-						<span title="<%= res.name %>"><a href="/posts?author=<%= res.name %> ">author: <%= res.name %></a></span>
+						<span title="<%= res.name %>"><a href="/moments?author=<%= res.name %> ">作者：<%= res.name %></a></span>
 					</div>
 					<div class="comment_pv">
 						<span><%= res.moment %></span>
@@ -41,7 +41,6 @@
                             //'<span>评论数：'+ val.comments +'</span>'+
                             //'<span>浏览量：'+ val.pv +'</span>'+
                             '</div>'+
-                            '<div class=\"comment_pv\">'+
                             '<span>'+ val.moment +'</span>'+
                             '</div>'+
                             '<a href=\"/moments/'+ val.id +'\">'+
@@ -55,7 +54,7 @@
                             '</li>'
                         )
                     })
-                }else{
+                } else {
                     alert('分页不存在')
                 } 
             }

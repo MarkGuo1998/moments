@@ -1,10 +1,10 @@
-<%- include("header",{type:'all'}) %>
+<%- include("header",{type:'my'}) %>
 	<div class="container">
 		<ul class="posts">
 			<% posts.forEach(function(res){ %>
 				<li>
 					<div class="author">
-						<span title="<%= res.name %>"><a href="/posts?author=<%= res.name %> ">author: <%= res.name %></a></span>
+						<span title="<%= res.name %>"><a href="/moments?author=<%= res.name %> ">作者：<%= res.name %></a></span>
 					</div>
 					<div class="comment_pv">
 						<span><%= res.moment %></span>
@@ -19,46 +19,45 @@
 		</ul>
 		<div style="margin-top: 30px" class="pagination" id="page"></div>	
 	</div>
-    
+
 	<script>
-		$.ajax({
-            url: "moments/page",
+        $.ajax({
+            url: "self/page",
             type: 'POST',
             data:{
-                page: 0
-            },
+					page: 0
+				},
             cache: false,
             success: function (msg) {
-                console.log("msg!, "+msg)
-                if (msg != 'error') {
-                    $('.posts').html(' ')
-                    $.each(msg,function(i,val){
-                        //console.log(val.content)
-                        $('.posts').append(
-                            '<li>'+
-                            '<div class=\"author\">'+
-                            '<span title=\"'+ val.name +'\"><a href=\"/moments?author='+ val.name +' \">author: '+ val.name +'</a></span>'+
-                            //'<span>评论数：'+ val.comments +'</span>'+
-                            //'<span>浏览量：'+ val.pv +'</span>'+
-                            '</div>'+
-                            '<div class=\"comment_pv\">'+
-                            '<span>'+ val.moment +'</span>'+
-                            '</div>'+
-                            '<a href=\"/moments/'+ val.id +'\">'+
-                            '<div class=\"title\">'+
-                            val.title +
-                            '</div>'+
-                            '<div class=\"content\">'+
-                            val.content +
-                            '</div>'+
-                            '</a>'+
-                            '</li>'
-                        )
-                    })
-                }else{
-                    alert('分页不存在')
-                } 
-            }
+				//console.log(msg)
+				if (msg != 'error') {
+					$('.posts').html(' ')
+					$.each(msg,function(i,val){
+						//console.log(val.content)
+						$('.posts').append(
+							'<li>'+
+				            '<div class=\"author\">'+
+				            '<span title=\"'+ val.name +'\"><a href=\"/posts?author='+ val.name +' \">author: '+ val.name +'</a></span>'+
+				            //'<span>评论数：'+ val.comments +'</span>'+
+				            //'<span>浏览量：'+ val.pv +'</span>'+
+				            '</div>'+
+				            '<span>'+ val.moment +'</span>'+
+				            '</div>'+
+				            '<a href=\"/moments/'+ val.id +'\">'+
+				            '<div class=\"title\">'+
+				            val.title +
+				            '</div>'+
+				            '<div class=\"content\">'+
+				            val.content +
+				            '</div>'+
+				            '</a>'+
+				            '</li>'
+							)
+						})
+					}else{
+						alert('分页不存在')
+					} 
+				}
         })
 	</script>
 <% include footer %>

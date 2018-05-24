@@ -5,7 +5,7 @@
 			<% res_moment.forEach(function(res_moment){ %>
 				<li>
 					<div class="author">
-						<span title="<%= res_moment.name %>"><a href="/posts?author=<%= res_moment.name %> ">author: <%= res_moment.name %></a></span>
+						<span title="<%= res_moment.name %>"><a href="/posts?author=<%= res_moment.name %> ">作者：<%= res_moment.name %></a></span>
 					</div>
 					<a href="/posts/<%= res_moment.id %>">
 						<div class="content markdown">
@@ -28,7 +28,7 @@
 			<% posts.forEach(function(res){ %>
 				<li>
 					<div class="cauthor">
-						<span title="<%= res.cname %>"><a href="/posts?author=<%= res.cname %> ">author: <%= res.cname %></a></span>
+						<span title="<%= res.cname %>"><a href="/posts?author=<%= res.cname %> ">评论者：<%= res.cname %></a></span>
 					</div>
 					<a href="/posts/<%= res.id %>">
 						<div class="content markdown">
