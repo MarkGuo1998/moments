@@ -16,7 +16,6 @@ router.get('/newfriends', async(ctx, next) => {
 router.post('/newfriends/submit', async(ctx, next) => {
 //console.log(ctx.request.body)
     let user = {
-        name: ctx.request.body.name,
         friendname: ctx.request.body.friendname,
         greeting: ctx.request.body.greeting,
     }
