@@ -82,12 +82,12 @@ router.post('/create', async(ctx, next) => {
 router.get('/moments/:postId', async(ctx, next) => {
     let res;
     console.log("ctx.params="+ctx.params.postId+", ctx.session="+ctx.session)
-    await userModel.findMomentsByMID(ctx.params.postId)
+    await userModel.findMomentByMID(ctx.params.postId)
         .then(result => {
             console.log(result)
             res_moment = result
         })
-    await userModel.findMomentsCommentsByMID(ctx.params.postId)
+    await userModel.findMomentCommentsByMID(ctx.params.postId)
         .then(result => {
             console.log(result)
             res = result
@@ -106,6 +106,7 @@ router.get('/moments/:postId', async(ctx, next) => {
 
 })
 
+
 // 发表评论
 router.post('/:postId', async(ctx, next) => {
     let uid = ctx.session.id,
@@ -118,5 +119,26 @@ router.post('/:postId', async(ctx, next) => {
             ctx.body = true
         }).catch(() => {
             ctx.body = false
+            console.log("fbplsb, ")
+        })
+})
+
+// 删除评论
+router.post('/comment/:commentId/remove', async(ctx, next) => {
+    let postId = ctx.params.postId,
+        commentId = ctx.params.commentId,
+        res_comments
+    console.log("scpl, ",[postId, commentId])
+    await userModel.deleteComment(commentId)
+        .then(() => {
+            console.log("yang sb")
+            ctx.body = {
+                data: 1
+            }
+        }).catch(() => {
+            console.log("1 < 0")
+            ctx.body = {
+                data: 2
+            }
         })
 })
