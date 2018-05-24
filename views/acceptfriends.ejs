@@ -1,0 +1,68 @@
+<%- include("header",{type:'acceptfriends'}) %>
+
+	<div class="container">
+		<ul class="posts">
+			<% posts.forEach(function(res){ %>
+				<li>
+					<div class="friendname">
+						<span title="<%= res.name %>"><a href="/moments?author=<%= res.name %> ">待加好友名：<%= res.name %></a></span>
+					</div>
+					<div class="content markdown">
+						<%- res.greeting %>
+					</div>
+				</li>
+			<% }) %>
+		</ul>
+		<div style="margin-top: 30px" class="pagination" id="page"></div>	
+	</div>
+
+	<div class="container">
+		<form class="form create" method="post">
+			<div>
+				<label>等待完成：</label> 
+				<input placeholder="请输入好友用户名" type="text" name="friendname">
+			</div>
+			<div>
+				<label>招呼：</label> 
+				<input placeholder="打一个招呼吧" type="text" name="greeting">
+			</div>
+			<div class="submit">发送好友请求</div>
+		</form>
+	</div>
+    <script>
+		$(window).keyup(function (e) {
+			//console.log(e.keyCode)
+			if (e.keyCode == 13) {
+				$('.submit').click()
+			}
+		})
+		$('.submit').click(()=>{
+			// console.log($('.form').serialize())
+			$.ajax({
+				url: "/acceptfriends/submit",
+				data: {
+					friendname: $('input[name=friendname]').val(),
+					greeting: $('input[name=greeting]').val()
+				},
+				type: "POST",
+				cache: false,
+				dataType: 'json',
+				success: function (msg) {
+				   if (msg.data == 1) {
+				   		fade('请求已成功发送')
+						setTimeout(()=>{
+							window.location.href="/moments"	  
+						},1000)
+				   }
+				   else{
+					   $('input').val('')
+					   fade('好友用户名不存在')               		
+				   }
+				},
+				error: function () {
+					alert('异常');
+				}
+			})			
+		})		
+	</script>
+<% include footer %>
