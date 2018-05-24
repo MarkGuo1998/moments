@@ -16,6 +16,10 @@ blockquote {
 
 body {
     margin-bottom: 20px;
+    font-family: sans-serif;
+    background: url(./001.jpg);
+    background-attachment: scroll;
+    padding: 20px;
 }
 ul,li{
     list-style-type: none;
@@ -34,19 +38,23 @@ header:after{
     display: table;
 }
 header .user_right{
-    float: right
+    float: right;
 }
 header .user_right .active{
     color: #5FB878;
     background: #fff;
     border: 1px solid #5FB878;
-    box-shadow: 0 5px 5px #ccc;
+    box-shadow: 0 3px 3px #ccc;
 }
+.user_right {
+    font-size: 20px;
+}
+
 header .user_name {
     float: left
 }
 .user_name {
-    font-size: 20px;
+    font-size: 32px;
 }
 
 .has_user a,

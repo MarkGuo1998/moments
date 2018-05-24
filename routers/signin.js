@@ -17,7 +17,7 @@ router.post('/signin', async(ctx, next) => {
     await userModel.findUserByName(name)
         .then(result => {
             let res = result
-            if (name === res[0]['name'] && md5(pass) === res[0]['password']) {
+            if (res.length > 0 && name === res[0]['name'] && md5(pass) === res[0]['password']) {
                 ctx.body = true
                 ctx.session.user = res[0]['name'] 
                 ctx.session.id = res[0]['id'] 
