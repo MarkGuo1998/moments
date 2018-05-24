@@ -13,7 +13,7 @@ router.get('/newfriends', async(ctx, next) => {
     })
 })
 // post 添加好友请求
-router.post('/newfriends', async(ctx, next) => {
+router.post('/newfriends/submit', async(ctx, next) => {
 //console.log(ctx.request.body)
     let user = {
         name: ctx.request.body.name,
@@ -23,7 +23,7 @@ router.post('/newfriends', async(ctx, next) => {
     //console.log(user.name);
     await userModel.findUserByName(user.friendname)
         .then(async (result) => {
-            console.log(result)
+            console.log('fri: ', user.friendname, ' ;res: ', result)
             if (result.length) {
                 await userModel.signUp([user.name, user.friendname, user.greeting])
                     .then(res=>{
@@ -44,7 +44,7 @@ router.post('/newfriends', async(ctx, next) => {
                 // 用户不存在
                 ctx.body = {
                     data: 2
-                };
+                };;
             }
         })
 })

@@ -23,7 +23,7 @@ router.post('/signup', async(ctx, next) => {
     //console.log(user.name);
     await userModel.findUserByName(user.name)
         .then(async (result) => {
-            //console.log(result)
+            console.log('name: ', user.name, ' ;res: ', result)
             if (result.length) {
                 try {
                     throw Error('用户已经存在')
