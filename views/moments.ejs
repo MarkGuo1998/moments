@@ -4,12 +4,12 @@
 			<% posts.forEach(function(res){ %>
 				<li>
 					<div class="author">
-						<span title="<%= res.name %>"><a href="/moments?author=<%= res.name %> ">author: <%= res.name %></a></span>
+						<span title="<%= res.name %>"><a href="/posts?author=<%= res.name %> ">author: <%= res.name %></a></span>
 					</div>
 					<div class="comment_pv">
 						<span><%= res.moment %></span>
 					</div>
-					<a href="/moments/<%= res.id %>">
+					<a href="/posts/<%= res.id %>">
 						<div class="content markdown">
 							<%- res.content %>
 						</div>
@@ -19,6 +19,7 @@
 		</ul>
 		<div style="margin-top: 30px" class="pagination" id="page"></div>	
 	</div>
+    
 	<script>
 		$.ajax({
             url: "moments/page",
@@ -30,10 +31,10 @@
             success: function (msg) {
                 console.log("msg!, "+msg)
                 if (msg != 'error') {
-                    $('.moments').html(' ')
+                    $('.posts').html(' ')
                     $.each(msg,function(i,val){
                         //console.log(val.content)
-                        $('.moments').append(
+                        $('.posts').append(
                             '<li>'+
                             '<div class=\"author\">'+
                             '<span title=\"'+ val.name +'\"><a href=\"/moments?author='+ val.name +' \">author: '+ val.name +'</a></span>'+
