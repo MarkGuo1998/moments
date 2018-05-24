@@ -52,6 +52,7 @@ app.use(require('./routers/signin.js').routes())
 app.use(require('./routers/signup.js').routes())
 app.use(require('./routers/moments.js').routes())
 app.use(require('./routers/signout.js').routes())
+app.use(require('./routers/newfriends.js').routes())
 
 
 app.listen(3000)

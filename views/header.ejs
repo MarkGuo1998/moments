@@ -71,6 +71,11 @@
 					<% }else{ %>
 						<a href="/create">发表动态</a>
 					<% }%>
+					<% if(type == 'newfriends'){ %>
+						<a class="active" href="/newfriends">添加好友</a>
+					<% }else{ %>
+						<a href="/newfriends">添加好友</a>
+					<% }%>
 					
 					<span class="signout">登出</span>
 				</div>
@@ -93,6 +98,7 @@
 					<% }else{ %>
 						<a href="/signin">登录</a>
 					<% }%>
+					
 				</div>
 			<% } %>
 		</div>
