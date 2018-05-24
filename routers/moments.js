@@ -79,36 +79,60 @@ router.post('/create', async(ctx, next) => {
 })
 
 // 单篇文章页
-router.get('/moments/:postId', async(ctx, next) => {
-    let comment_res,
-        res,
-        pageOne,
-        res_pv; 
-    await userModel.findDataById(ctx.params.postId)
+// 单篇文章页
+router.get('/posts/:postId', async(ctx, next) => {
+    let res;
+    await userModel.findMomentsByID(ctx.params.postId)
         .then(result => {
-            //console.log(result )
+            console.log(result )
             res = result
-            res_pv = parseInt(result[0]['pv'])
-            res_pv += 1
-           // console.log(res_pv)
         })
-    await userModel.updatePostPv([res_pv, ctx.params.postId])
-    await userModel.findCommentByPage(1,ctx.params.postId)
-        .then(result => {
-            pageOne = result
-            //console.log('comment', comment_res)
-        })
-    await userModel.findCommentById(ctx.params.postId)
-        .then(result => {
-            comment_res = result
-            //console.log('comment', comment_res)
-        })
-    await ctx.render('sPost', {
+    await ctx.render('comments', {
         session: ctx.session,
-        posts: res[0],
-        commentLenght: comment_res.length,
-        commentPageLenght: Math.ceil(comment_res.length/10),
-        pageOne:pageOne
+        moment_content: res[0],
+        moment_name: res[1],
+        comment_content: res[2],
+        comment_name: res[3],
+        id: res[4]
     })
 
+})
+
+// 发表评论
+router.post('/:postId', async(ctx, next) => {
+    let name = ctx.session.user,
+        content = ctx.request.body.content,
+        postId = ctx.params.postId,
+        res_comments,
+        time = moment().format('YYYY-MM-DD HH:mm:ss'),
+        avator;
+    await userModel.findUserData(ctx.session.user)
+        .then(res => {
+            console.log(res[0]['avator'])
+            avator = res[0]['avator']
+        })   
+    await userModel.insertComment([name, md.render(content),time, postId,avator])
+    await userModel.findDataById(postId)
+        .then(result => {
+            res_comments = parseInt(result[0]['comments'])
+            res_comments += 1
+        })
+    await userModel.updatePostComment([res_comments, postId])
+        .then(() => {
+            ctx.body = true
+        }).catch(() => {
+            ctx.body = false
+        })
+})
+
+// 评论分页
+router.post('/posts/:postId/commentPage', async function(ctx){
+    let postId = ctx.params.postId,
+        page = ctx.request.body.page;
+    await userModel.findCommentByPage(page,postId)
+        .then(res=>{
+            ctx.body = res
+        }).catch(()=>{
+            ctx.body = 'error'
+        })  
 })
