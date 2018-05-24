@@ -8,7 +8,7 @@ const fs = require('fs')
 // 
 router.get('/acceptfriends', async(ctx, next) => {
     //await checkNotLogin(ctx)
-    await ctx.render('newfriends', {
+    await ctx.render('acceptfriends', {
         session: ctx.session,
     })
 })
