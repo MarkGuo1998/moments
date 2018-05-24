@@ -9,7 +9,7 @@
 					<div class="comment_pv">
 						<span><%= res.moment %></span>
 					</div>
-					<a href="/posts/<%= res.id %>">
+					<a href="/moments/<%= res.id %>">
 						<div class="content markdown">
 							<%- res.content %>
 						</div>
@@ -31,13 +31,13 @@
             success: function (msg) {
 				//console.log(msg)
 				if (msg != 'error') {
-					$('.posts').html(' ')
+					$('.moments').html(' ')
 					$.each(msg,function(i,val){
 						//console.log(val.content)
-						$('.posts').append(
+						$('.moments').append(
 							'<li>'+
 				            '<div class=\"author\">'+
-				            '<span title=\"'+ val.name +'\"><a href=\"/posts?author='+ val.name +' \">author: '+ val.name +'</a></span>'+
+				            '<span title=\"'+ val.name +'\"><a href=\"/moments?author='+ val.name +' \">author: '+ val.name +'</a></span>'+
 				            //'<span>评论数：'+ val.comments +'</span>'+
 				            //'<span>浏览量：'+ val.pv +'</span>'+
 				            '</div>'+

@@ -79,9 +79,9 @@ router.post('/create', async(ctx, next) => {
 })
 
 // 单篇文章页
-// 单篇文章页
-router.get('/posts/:postId', async(ctx, next) => {
+router.get('/moments/:postId', async(ctx, next) => {
     let res;
+    console.log("ctx.params="+ctx.params.postId+", ctx.session="+ctx.session)
     await userModel.findMomentsByMID(ctx.params.postId)
         .then(result => {
             console.log(result)
@@ -108,39 +108,15 @@ router.get('/posts/:postId', async(ctx, next) => {
 
 // 发表评论
 router.post('/:postId', async(ctx, next) => {
-    let name = ctx.session.user,
+    let uid = ctx.session.id,
         content = ctx.request.body.content,
-        postId = ctx.params.postId,
-        res_comments,
-        time = moment().format('YYYY-MM-DD HH:mm:ss'),
-        avator;
-    await userModel.findUserData(ctx.session.user)
-        .then(res => {
-            console.log(res[0]['avator'])
-            avator = res[0]['avator']
-        })   
-    await userModel.insertComment([name, md.render(content),time, postId,avator])
-    await userModel.findDataById(postId)
-        .then(result => {
-            res_comments = parseInt(result[0]['comments'])
-            res_comments += 1
-        })
-    await userModel.updatePostComment([res_comments, postId])
+        momentID = ctx.params.postId
+    
+    console.log("fbpl, ",[uid, momentID, content])
+    await userModel.insertComment([uid, momentID, content])
         .then(() => {
             ctx.body = true
         }).catch(() => {
             ctx.body = false
         })
-})
-
-// 评论分页
-router.post('/posts/:postId/commentPage', async function(ctx){
-    let postId = ctx.params.postId,
-        page = ctx.request.body.page;
-    await userModel.findCommentByPage(page,postId)
-        .then(res=>{
-            ctx.body = res
-        }).catch(()=>{
-            ctx.body = 'error'
-        })  
 })
