@@ -25,7 +25,8 @@ router.post('/newfriends/submit', async(ctx, next) => {
         .then(async (result) => {
             console.log('fri: ', user.friendname, ' ;res: ', result)
             if (result.length) {
-                await userModel.signUp([user.name, user.friendname, user.greeting])
+                console.log('Res ID: ', result[0].id)
+                await userModel.insertRequest([ctx.session.id, result[0].id, user.greeting])
                     .then(res=>{
                         console.log('好友请求已发送',res)
                         //注册成功
