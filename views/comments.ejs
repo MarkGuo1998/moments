@@ -1,31 +1,35 @@
-<%- include("header",{type:''}) %>
+<%- include("header",{type:'all'}) %>
 	<div class="container">
-		<ul class="moments smoment">
-			<li>
-				<div class="author">
-					<span title="<%= moment_name %>"><a href="/moments?author=<%= moment_name %> ">author: <%= moment_name %></a></span>
-				</div>
-				<div class="comment_pv">
-					<span><%= moment_content %></span>
-				</div>
-				<a href="/moments/<%= id %>">
-					<div class="content markdown">
-						<%- moment_content %>
+		<ul class="posts">
+			<% posts.forEach(function(res){ %>
+				<li>
+					<div class="author">
+						<span title="<%= res.mname %>"><a href="/posts?author=<%= res.mname %> ">author: <%= res.mname %></a></span>
 					</div>
-				</a>
-				<div class="edit">
-					<% if(session && session.user ===  moment_name  ){ %>
-					<p><a href="<%= moments['id'] %>/edit">编辑</a></p>
-					<p><a class="delete_moment">删除</a></p>
-					<% } %>
-				</div>
-			</li>
-		</ul>
-	</div>
-	<div class="comment_wrap">
+					<a href="/posts/<%= res.id %>">
+						<div class="content markdown">
+							<%- res.mcontent %>
+						</div>
+					</a>
 
+					<div class="cauthor">
+						<span title="<%= res.cname %>"><a href="/posts?author=<%= res.cname %> ">author: <%= res.cname %></a></span>
+					</div>
+					<a href="/posts/<%= res.id %>">
+						<div class="content markdown">
+							<%- res.ccontent %>
+						</div>
+					</a>
+
+				</li>
+			<% }) %>
+		</ul>
+		
+	</div>
+
+	<div class="comment_wrap">
 		<% if(session.user){ %>
-		<form class="form" method="moment" action="/<%= id %>">
+		<form class="form" method="post" action="/<%= posts.id %>">
 			<textarea id="spContent" name="content" cols="82"></textarea>
 			<div class="submit">发表留言</div>
 		</form>
@@ -38,7 +42,7 @@
 				<div class="cmt_lists">
 					<div class="cmt_content">
 						<div class="userMsg">
-							<img src="../images/<%= res['avator'] %>" alt="avator"><span><%= res['name'] %></span>
+							<img src="../images/<%= res['avator'] %>.png" alt=""><span><%= res['name'] %></span>
 						</div>
 						<div class="cmt_detail">
 							<%- res['content'] %>
@@ -58,41 +62,50 @@
 		<% } %>
 		<div style="margin-top: 30px" class="pagination" id="page"></div>	
 	</div>
-	<script src="/pagination.js"></script>
+
+
 	<script>
-		var userName = "<%- session.user %>"
-		function(val){
-			// 当前页
-			var _comment = ''
-			$.ajax({
-				url: "<%= id %>/commentPage",
-				type: 'moment',
-				data:{
-					page: val
-				},
-				cache: false,
-				success: function (msg) {
-					//console.log(msg)
-					_comment = ''
-					if (msg != 'error') {
-						$('.comment_list').html(' ')
-						$.each(msg,function(i,val){
-							//console.log(val.content)
-							_comment += '<div class=\"cmt_lists\"><div class=\"cmt_content\"><div class=\"userMsg\"><img src = \"../images/'+ val.avator +'\" alt=\"avator\"><span>'+ val.moment_name +'</span></div ><div class="cmt_detail">'+ val.moment_content + '</div><span class=\"cmt_time\">'+ val.comment_content +'</span><span class=\"cmt_name\">' + val.comment_name + '</div><span class=\"cmt_time\">' + val.id + '</div><span class=\"cmt_time\">';
-								if (val.name == userName) {
-									_comment += '<a class=\"delete_comment\" href=\"javascript:delete_comment('+ val.id +');\"> 删除</a>'
-								}
-							_comment += '</span></div></div>'
-						})
-						$('.comment_list').append(_comment)
-					}else{
-						alert('分页不存在')
-					} 
-				}
-			})
-		
-		}
-		
-		
+		$.ajax({
+            url: "<%= posts.id %>/commentPage",
+            type: 'POST',
+            data:{
+                page: 0
+            },
+            cache: false,
+            success: function (msg) {
+                console.log("msg!, "+msg)
+                if (msg != 'error') {
+                    $('.posts').html(' ')
+                    $.each(msg,function(i,val){
+                        //console.log(val.content)
+                        $('.posts').append(
+                            '<li>'+
+                            '<div class=\"author\">'+
+                            '<span title=\"'+ val.mname +'\"><a href=\"/moments?author='+ val.mname +' \">author: '+ val.mname +'</a></span>'+
+                            //'<span>评论数：'+ val.comments +'</span>'+
+                            //'<span>浏览量：'+ val.pv +'</span>'+
+                            '</div>'+
+                            '<div class=\"comment_pv\">'+
+                            '<span>'+ val.mcontent +'</span>'+
+                            '</div>'+
+                            '<a href=\"/moments/'+ val.id +'\">'+
+                            '<div class=\"title\">'+
+                            val.cname +
+                            '</div>'+
+                            '<div class=\"title\">'+
+                            val.ccontent +
+                            '</div>'+
+                            '<div class=\"content\">'+
+                            val.mcontent +
+                            '</div>'+
+                            '</a>'+
+                            '</li>'
+                        )
+                    })
+                }else{
+                    alert('分页不存在')
+                } 
+            }
+        })
 	</script>
 <% include footer %>

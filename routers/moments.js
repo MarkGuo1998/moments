@@ -84,16 +84,17 @@ router.get('/posts/:postId', async(ctx, next) => {
     let res;
     await userModel.findMomentsByID(ctx.params.postId)
         .then(result => {
-            console.log(result )
+            console.log(result)
             res = result
         })
     await ctx.render('comments', {
         session: ctx.session,
-        moment_content: res[0],
-        moment_name: res[1],
-        comment_content: res[2],
-        comment_name: res[3],
-        id: res[4]
+        //moment_content: res[0],
+        //moment_name: res[1],
+        //comment_content: res[2],
+        //comment_name: res[3],
+        //id: res[4]
+        posts: res
     })
 
 })
