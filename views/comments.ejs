@@ -1,17 +1,26 @@
 <%- include("header",{type:'all'}) %>
+
+	<div class="container">
+		<ul class="res_moment">
+			<% res_moment.forEach(function(res_moment){ %>
+				<li>
+					<div class="author">
+						<span title="<%= res_moment.name %>"><a href="/posts?author=<%= res_moment.name %> ">author: <%= res_moment.name %></a></span>
+					</div>
+					<a href="/posts/<%= res_moment.id %>">
+						<div class="content markdown">
+							<%- res_moment.content %>
+						</div>
+					</a>
+				</li>
+			<% }) %>
+		</ul>	
+	</div>
+
 	<div class="container">
 		<ul class="posts">
 			<% posts.forEach(function(res){ %>
 				<li>
-					<div class="author">
-						<span title="<%= res.mname %>"><a href="/posts?author=<%= res.mname %> ">author: <%= res.mname %></a></span>
-					</div>
-					<a href="/posts/<%= res.id %>">
-						<div class="content markdown">
-							<%- res.mcontent %>
-						</div>
-					</a>
-
 					<div class="cauthor">
 						<span title="<%= res.cname %>"><a href="/posts?author=<%= res.cname %> ">author: <%= res.cname %></a></span>
 					</div>
@@ -20,11 +29,9 @@
 							<%- res.ccontent %>
 						</div>
 					</a>
-
 				</li>
 			<% }) %>
 		</ul>
-		
 	</div>
 
 	<div class="comment_wrap">

@@ -82,7 +82,12 @@ router.post('/create', async(ctx, next) => {
 // 单篇文章页
 router.get('/posts/:postId', async(ctx, next) => {
     let res;
-    await userModel.findMomentsByID(ctx.params.postId)
+    await userModel.findMomentsByMID(ctx.params.postId)
+        .then(result => {
+            console.log(result)
+            res_moment = result
+        })
+    await userModel.findMomentsCommentsByMID(ctx.params.postId)
         .then(result => {
             console.log(result)
             res = result
@@ -94,6 +99,7 @@ router.get('/posts/:postId', async(ctx, next) => {
         //comment_content: res[2],
         //comment_name: res[3],
         //id: res[4]
+        res_moment: res_moment,
         posts: res
     })
 
