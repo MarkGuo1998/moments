@@ -106,6 +106,23 @@ router.get('/moments/:postId', async(ctx, next) => {
 
 })
 
+// 删除单篇文章
+router.post('/moments/:postId/remove', async(ctx, next) => {
+    let momentId = ctx.params.postId
+    console.log("mid", momentId)
+    await userModel.deleteAllMomentComments(momentId)
+    await userModel.deleteMoment(momentId)
+        .then(() => {
+            ctx.body = {
+                data: 1
+            }
+        }).catch(() => {
+            ctx.body = {
+                data: 2
+            }
+        })
+})
+
 
 // 发表评论
 router.post('/:postId', async(ctx, next) => {
@@ -141,4 +158,7 @@ router.post('/comment/:commentId/remove', async(ctx, next) => {
                 data: 2
             }
         })
+    
 })
+
+

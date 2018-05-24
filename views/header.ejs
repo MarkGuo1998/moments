@@ -28,7 +28,7 @@
 						if (msg) {
 							fade('登出成功')
 							setTimeout(()=>{
-								window.location.href = "/moments"
+								window.location.href = "/signin"
 							},1500)	
 						}
 					},
@@ -55,7 +55,6 @@
 		<div class="user_right">
 			<%  if(session.user){ %>
 				<div class="has_user">
-					<a target="__blank" href="https://github.com/wclimb/Koa2-blog">GitHub</a>
 					<% if(type == 'all'){ %>
 						<a class="active" href="/moments">全部动态</a>
 					<% }else{ %>
@@ -82,12 +81,6 @@
 			<% } %>
 			<% if(!session.user){ %>
 				<div class="none_user has_user">
-					<a target="__blank" href="https://github.com/wclimb/Koa2-blog">GitHub</a>
-					<% if(type == 'all'){ %>
-						<a class="active" href="/moments">全部动态</a>
-					<% }else{ %>
-						<a href="/moments">全部动态</a>
-					<% }%>
 					<% if(type == 'signup'){ %>
 						<a class="active" href="/signup">注册</a>
 					<% }else{ %>
