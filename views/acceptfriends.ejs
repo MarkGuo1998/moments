@@ -1,4 +1,21 @@
 <%- include("header",{type:'acceptfriends'}) %>
+
+	<div class="container">
+		<ul class="posts">
+			<% posts.forEach(function(res){ %>
+				<li>
+					<div class="friendname">
+						<span title="<%= res.name %>"><a href="/moments?author=<%= res.name %> ">待加好友名：<%= res.name %></a></span>
+					</div>
+					<div class="content markdown">
+						<%- res.greeting %>
+					</div>
+				</li>
+			<% }) %>
+		</ul>
+		<div style="margin-top: 30px" class="pagination" id="page"></div>	
+	</div>
+
 	<div class="container">
 		<form class="form create" method="post">
 			<div>

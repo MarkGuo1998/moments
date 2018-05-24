@@ -7,9 +7,15 @@ const checkLogin = require('../middlewares/check.js').checkLogin
 const fs = require('fs')
 // 
 router.get('/acceptfriends', async(ctx, next) => {
-    //await checkNotLogin(ctx)
+    let res;
+    await userModel.findRequestByFruid(ctx.session.id)
+        .then(result => {
+            res = result
+            console.log('res', res)
+        })
     await ctx.render('acceptfriends', {
         session: ctx.session,
+        posts: res
     })
 })
 // post 添加好友请求
