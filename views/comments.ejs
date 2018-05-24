@@ -5,9 +5,9 @@
 			<% res_moment.forEach(function(res_moment){ %>
 				<li>
 					<div class="author">
-						<span title="<%= res_moment.name %>"><a href="/posts?author=<%= res_moment.name %> ">作者：<%= res_moment.name %></a></span>
+						<span title="<%= res_moment.name %>"><a href="/moments?author=<%= res_moment.name %> ">作者：<%= res_moment.name %></a></span>
 					</div>
-					<a href="/posts/<%= res_moment.id %>">
+					<a href="/moments/<%= res_moment.id %>">
 						<div class="content markdown">
 							<%- res_moment.content %>
 						</div>
@@ -28,13 +28,18 @@
 			<% posts.forEach(function(res){ %>
 				<li>
 					<div class="cauthor">
-						<span title="<%= res.cname %>"><a href="/posts?author=<%= res.cname %> ">评论者：<%= res.cname %></a></span>
+						<span title="<%= res.cname %>"><a href="/moments?author=<%= res.cname %> ">评论者：<%= res.cname %></a></span>
 					</div>
-					<a href="/posts/<%= res.id %>">
+					<a href="/moments/<%= res.id %>">
 						<div class="content markdown">
 							<%- res.ccontent %>
 						</div>
 					</a>
+                    <span class="cmt_name">
+							<% if(session && session.user ===  res.cname){ %>
+								<a class="delete_comment" href="javascript:delete_comment(<%= res['cid'] %>);"> 删除</a>
+							<% } %>
+				    </span>
 				</li>
 			<% }) %>
 		</ul>
@@ -50,26 +55,6 @@
 			<p class="tips">登录之后才可以评论哟</p>
 		<% } %>
 		<% if (1 < 0) { %>
-		<div class="comment_list markdown">
-			<% pageOne.forEach(function(res){ %>
-				<div class="cmt_lists">
-					<div class="cmt_content">
-						<div class="userMsg">
-							<img src="../images/<%= res['avator'] %>.png" alt=""><span><%= res['name'] %></span>
-						</div>
-						<div class="cmt_detail">
-							<%- res['content'] %>
-						</div>
-						<span class="cmt_time"><%= res['moment'] %></span>
-						<span class="cmt_name">
-							<% if(session && session.user ===  res['name']){ %>
-								<a class="delete_comment" href="javascript:delete_comment(<%= res['id'] %>);"> 删除</a>
-							<% } %>
-						</span>
-					</div>
-				</div>
-			<% }) %>
-		</div>	
 		<% } else{ %>
 			<p class="tips">还没有评论，赶快去评论吧！</p>
 		<% } %>
@@ -88,10 +73,10 @@
             success: function (msg) {
                 console.log("msg!, "+msg)
                 if (msg != 'error') {
-                    $('.posts').html(' ')
+                    $('.moments').html(' ')
                     $.each(msg,function(i,val){
                         //console.log(val.content)
-                        $('.posts').append(
+                        $('.moments').append(
                             '<li>'+
                             '<div class=\"author\">'+
                             '<span title=\"'+ val.mname +'\"><a href=\"/moments?author='+ val.mname +' \">author: '+ val.mname +'</a></span>'+
@@ -122,7 +107,7 @@
         })
         
         // 删除文章
-		$('.delete_post').click(() => {
+		$('.delete_comment').click(() => {
 			$.ajax({
 				url: "<%= posts.id %>/remove",
 				type: 'POST',
@@ -131,7 +116,7 @@
 					if (msg.data == 1) {
 						fade('删除文章成功')
 						setTimeout(() => {
-							window.location.href = "/posts"
+							window.location.href = "/moments"
 						}, 1000)
 					} else if (msg.data == 2) {
 						fade('删除文章失败');
@@ -174,19 +159,25 @@
 		})
         
         // 删除评论
-		function delete_comment(id) {
+        document.write("!!!")
+        $('.delete_comment').click(function(){
+            fade('删除留言成功')
+						setTimeout(() => {
+							window.location.reload()
+						}, 1000)
 			$.ajax({
-				url: "<%= posts.id %>/comment/" + id + "/remove",
+				url: "/comment/${id}/remove",
 				type: 'POST',
 				cache: false,
 				success: function (msg) {
 					if (msg.data == 1) {
 						fade('删除留言成功')
+                        
 						setTimeout(() => {
 							window.location.reload()
 						}, 1000)
 					} else if (msg.data == 2) {
-						fade('删除留言失败');
+						fade('删除留言失败')
 						setTimeout(() => {
 							window.location.reload()
 						}, 1500)
