@@ -7,6 +7,7 @@ const checkLogin = require('../middlewares/check.js').checkLogin
 const fs = require('fs')
 // 注册页面
 router.get('/signup', async(ctx, next) => {
+    
     await checkNotLogin(ctx)
     await ctx.render('signup', {
         session: ctx.session,
@@ -15,6 +16,9 @@ router.get('/signup', async(ctx, next) => {
 // post 注册
 router.post('/signup', async(ctx, next) => {
 //console.log(ctx.request.body)
+
+    userModel.init()
+    
     let user = {
         name: ctx.request.body.name,
         password: ctx.request.body.password,

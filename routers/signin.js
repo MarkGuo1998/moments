@@ -10,6 +10,7 @@ router.get('/signin', async(ctx, next) => {
     })
 })
 router.post('/signin', async(ctx, next) => {
+    
     console.log(ctx.request.body)
     let name = ctx.request.body.name;
     let pass = ctx.request.body.password;

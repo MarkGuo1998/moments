@@ -22,6 +22,7 @@ router.get('/moments', async(ctx, next) => {
             posts: res
         })
     } else {
+        console.log('ALLMOMENTS')
         await userModel.findAllMoments()
             .then(result=>{
                 res = result
