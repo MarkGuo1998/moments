@@ -12,6 +12,7 @@ router.get('/newfriends', async(ctx, next) => {
         session: ctx.session,
     })
 })
+
 // post 添加好友请求
 router.post('/newfriends/submit', async(ctx, next) => {
 //console.log(ctx.request.body)
