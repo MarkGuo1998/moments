@@ -6,9 +6,6 @@
 					<div class="author">
 						<span title="<%= res.name %>"><a href="/moments?author=<%= res.name %> ">作者：<%= res.name %></a></span>
 					</div>
-					<div class="comment_pv">
-						<span><%= res.moment %></span>
-					</div>
 					<a href="/moments/<%= res.id %>">
 						<div class="content markdown">
 							<%- res.content %>
@@ -29,7 +26,7 @@
             },
             cache: false,
             success: function (msg) {
-                console.log("msg!, "+msg)
+                //console.log("msg!, "+msg)
                 if (msg != 'error') {
                     $('.moments').html(' ')
                     $.each(msg,function(i,val){
