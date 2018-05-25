@@ -44,7 +44,7 @@
 	<header>
 		<div class="user_name" style="text-align: center;">
 			<% if(session.user){ %>
-				 你好，<%= session.user %> <br>
+				 你好，<%= decodeURIComponent(session.user) %> <br>
 			<% } %>
 			<% if(!session.user){ %>
                 欢迎注册登录^_^ <br>
