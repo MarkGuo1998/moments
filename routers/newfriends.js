@@ -20,19 +20,31 @@ router.post('/newfriends/submit', async(ctx, next) => {
         friendname: ctx.request.body.friendname,
         greeting: ctx.request.body.greeting,
     }
-    //console.log(user.name);
+    // check if request has send before, do not allow re-send to the same person
     await userModel.findUserByName(user.friendname)
         .then(async (result) => {
             console.log('fri: ', user.friendname, ' ;res: ', result)
             if (result.length) {
                 console.log('Res ID: ', result[0].id)
-                await userModel.insertRequest([ctx.session.id, result[0].id, user.greeting])
-                    .then(res=>{
-                        console.log('好友请求已发送',res)
-                        //注册成功
-                        ctx.body = {
-                            data: 1
-                        };
+                await userModel.findRequestByUidFruid(ctx.session.id, result[0].id)
+                    .then(async (res) =>{
+                        if (res.length) {
+                            console.log('重复请求',res)
+                            //重复请求
+                            ctx.body = {
+                                data: 3
+                            };
+                        }
+                        else{
+                            await userModel.insertRequest([ctx.session.id, result[0].id, user.greeting])
+                                .then(res=>{
+                                    console.log('好友请求已发送',res)
+                                    //注册成功
+                                    ctx.body = {
+                                        data: 1
+                                    };
+                                })
+                        }
                     })
     
             } else {
@@ -49,4 +61,5 @@ router.post('/newfriends/submit', async(ctx, next) => {
             }
         })
 })
+
 module.exports = router
