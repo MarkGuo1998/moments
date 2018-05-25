@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en">  
 <head>
 	<meta charset="UTF-8">
 	<title>koa2-blog</title>
@@ -44,14 +44,14 @@
 	<header>
 		<div class="user_name" style="text-align: center;">
 			<% if(session.user){ %>
-				 你好，<%= session.user %>
+				 你好，<%= session.user %> <br>
 			<% } %>
 			<% if(!session.user){ %>
-            欢迎注册登录^_^
-            
+                欢迎注册登录^_^ <br>
 			<% } %>
 		</div>
 		<div class="message">登录成功</div>
+        <br> <br>
 		<div class="user_right">
 			<%  if(session.user){ %>
 				<div class="has_user">

@@ -10,6 +10,10 @@
 					<div class="content markdown">
 						<%- res.greeting %>
 					</div>
+                    <span class="cmt_name">
+						<a class="delete_comment" href="javascript:delete_comment(<%= res['cid'] %>);"> 通过</a>
+                        <a class="delete_comment" href="javascript:delete_comment(<%= res['cid'] %>);"> 删除</a>
+				    </span>
 				</li>
 			<% }) %>
 		</ul>

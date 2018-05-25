@@ -47,7 +47,7 @@ header .user_right .active{
     box-shadow: 0 3px 3px #ccc;
 }
 .user_right {
-    font-size: 20px;
+    font-size: 18px;
 }
 
 header .user_name {
@@ -79,6 +79,7 @@ header .user_name {
 .posts{
     border-radius: 4px; 
     border: 1px solid #ddd;
+    margin: 10px;
 }
 .posts > li{
     padding: 10px;
