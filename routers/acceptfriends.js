@@ -75,21 +75,29 @@ router.post('/acceptfriends/:rid/remove', async(ctx, next) => {
 })
 
 // 通过好友请求
-router.post('/acceptfriends/:rid/remove', async(ctx, next) => {
-    let requestId = ctx.params.rid
-    console.log("scqq "+ requestId)
-    await userModel.deleteRequest(requestId)
-        .then(() => {
-            console.log("yang sb")
-            ctx.body = {
-                data: 1
-            }
-        }).catch(() => {
-            console.log("1 < 0")
-            ctx.body = {
-                data: 2
-            }
+router.post('/acceptfriends/:rid/accept', async(ctx, next) => {
+    let requestId = ctx.params.rid,
+        value
+    console.log("requestid = "+ requestId)
+    await userModel.findUidFruidByRequest(requestId)
+        .then(async(result) =>{
+            value = result[0]
+            let value_ = [value.uid, value.fruid, value.fruid, value.uid]
+            await userModel.insertFriend(value_)
+     //       await userModel.insertRequest(value)
+                .then(() => {
+                    userModel.deleteRequest(requestId)
+                    ctx.body = {
+                        data: 1 
+                    }
+                }).catch(result => {
+                    console.log(result)
+                    ctx.body = {
+                        data: 2
+                    }
+                })
         })
+        
     
 })
 

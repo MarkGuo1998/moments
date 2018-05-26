@@ -5,7 +5,8 @@ const config = {
 		USERNAME: 'root',
 		PASSWORD: 'mark19980716',
 		PORT: '3002',
-		HOST: 'localhost'
+		HOST: 'localhost',
+        multipleStatements: true
 	}
 }
 

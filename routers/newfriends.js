@@ -37,12 +37,21 @@ router.post('/newfriends/submit', async(ctx, next) => {
                         }
                         else{
                             await userModel.insertRequest([ctx.session.id, result[0].id, user.greeting])
-                                .then(res=>{
-                                    console.log('好友请求已发送',res)
-                                    //注册成功
-                                    ctx.body = {
+                                .then(async (res)=>{
+                                    if (res.length) {
+                                        console.log('好友请求已发送',res)
+                                        //注册成功
+                                        ctx.body = {
                                         data: 1
-                                    };
+                                        }
+                                    }
+                                    else {
+                                        console.log('已经是好友了',res)
+                                        //注册成功
+                                        ctx.body = {
+                                        data: 4
+                                        }
+                                    }
                                 })
                         }
                     })

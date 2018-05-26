@@ -40,15 +40,19 @@
 				   }
 				   else if (msg.data == 2) {
 					   $('input').val('')
-					   fade('好友用户名不存在')               		
+					   fade('好友用户名不存在')
 				   }
 				   else if (msg.data == 3) {
 				   	   $('input').val('')
-					   fade('您已向 Ta 发送过请求，请耐心等待对方同意～') 
+					   fade('你们已发送过请求，请查看待处理请求确认，或耐心等待对方同意～') 
 					   setTimeout(()=>{
 							window.location.href="/moments"	  
 					   },1000)
 				   }
+                    else if (msg.data == 4) {
+                        $('input').val('')
+					   fade('你们已经是好友了！') 
+                    }
 				},
 				error: function () {
 					alert('异常');
