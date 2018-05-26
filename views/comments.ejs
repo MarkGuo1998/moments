@@ -14,8 +14,8 @@
 					</a>
                     <div class="edit">
 					    <% if(session && session.user ===  res_moment.name){ %>
-					    <p><a href="<%= res_moment['id'] %>/edit">编辑</a> <a class="delete_post" href="javascript:delete_post(<%= res_moment['id'] %>);">删除</a></p>
-                        <p><a href="<%= res_moment['id'] %>/edit">编辑</a> <a class="delete_post" href="javascript:delete_post(<%= res_moment['id'] %>);">删除</a></p>
+					    <p><a class="delete_post" href="javascript:delete_post(<%= res_moment['id'] %>);">删除</a></p>
+                        <p><a href="<%= res_moment['id'] %>/edit">赞</a> <a class="delete_post" href="javascript:delete_post(<%= res_moment['id'] %>);">觉得欢乐</a></p>
 					   <% } %>
 				    </div>
 				</li>
