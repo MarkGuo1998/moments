@@ -84,7 +84,6 @@ router.post('/acceptfriends/:rid/accept', async(ctx, next) => {
             value = result[0]
             let value_ = [value.uid, value.fruid, value.fruid, value.uid]
             await userModel.insertFriend(value_)
-     //       await userModel.insertRequest(value)
                 .then(() => {
                     userModel.deleteRequest(requestId)
                     ctx.body = {
