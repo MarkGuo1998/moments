@@ -2,7 +2,8 @@
 
 	<div class="container">
 		<ul class="res_moment">
-			<% res_moment.forEach(function(res_moment){ %>
+			<% session.user = decodeURIComponent(session.user) 
+            res_moment.forEach(function(res_moment){ %>
 				<li>
 					<div class="author">
 						<span title="<%= res_moment.name %>"><a href="/moments?author=<%= res_moment.name %> ">作者：<%= res_moment.name %></a></span>
