@@ -53,6 +53,7 @@ app.use(require('./routers/signup.js').routes())
 app.use(require('./routers/moments.js').routes())
 app.use(require('./routers/friendmoments.js').routes())
 app.use(require('./routers/signout.js').routes())
+app.use(require('./routers/newfriends.js').routes())
 app.use(require('./routers/acceptfriends.js').routes())
 app.use(require('./routers/friendslist.js').routes())
 
