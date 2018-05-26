@@ -26,7 +26,7 @@ router.get('/friendmoments', async(ctx, next) => {
     } else {
         console.log('ALLMOMENTS')
         
-        await userModel.findAllMoments()
+        await userModel.findFriendsMomentsByUid(ctx.session.id)
             .then(result=>{
                 res = result
             }) 
