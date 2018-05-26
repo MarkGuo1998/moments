@@ -65,6 +65,11 @@
 					<% }else{ %>
 						<a href="/moments?author=<%= session.user %>">我的动态</a>
 					<% }%>
+					<% if(type == 'friends'){ %>
+						<a class="active" href="/friendmoments">好友动态</a>
+					<% }else{ %>
+						<a href="/friendmoments">好友动态</a>
+					<% }%>
 					<% if(type == 'create'){ %>
 						<a class="active" href="/create">发表动态</a>
 					<% }else{ %>

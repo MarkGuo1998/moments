@@ -36,6 +36,7 @@ router.get('/moments', async(ctx, next) => {
         })
     }
 })
+
 // 首页
 router.post('/moments', async(ctx, next) => {
     await userModel.findAllMoments()
