@@ -54,4 +54,24 @@ router.post('/acceptfriends/submit', async(ctx, next) => {
             }
         })
 })
+
+// 删除好友请求
+router.post('/acceptfriends/:rid/remove', async(ctx, next) => {
+    let requestId = ctx.params.rid
+    console.log("scqq "+ requestId)
+    await userModel.deleteRequest(requestId)
+        .then(() => {
+            console.log("yang sb")
+            ctx.body = {
+                data: 1
+            }
+        }).catch(() => {
+            console.log("1 < 0")
+            ctx.body = {
+                data: 2
+            }
+        })
+    
+})
+
 module.exports = router

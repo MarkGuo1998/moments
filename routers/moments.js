@@ -9,7 +9,6 @@ router.get('/', async(ctx, next) => {
 // 
 router.get('/moments', async(ctx, next) => {
     let res,
-        postsLength,
         name = decodeURIComponent(ctx.request.querystring.split('=')[1]),
         user = decodeURIComponent(ctx.session.user)
     console.log("user, "+user)
@@ -135,30 +134,27 @@ router.post('/:postId', async(ctx, next) => {
         content = ctx.request.body.content,
         momentID = ctx.params.postId
     
-    console.log("fbpl, ",[uid, momentID, content])
+ //   console.log("fbpl, ",[uid, momentID, content])
     await userModel.insertComment([uid, momentID, content])
         .then(() => {
             ctx.body = true
         }).catch(() => {
             ctx.body = false
-            console.log("fbplsb, ")
         })
 })
 
 // 删除评论
 router.post('/comment/:commentId/remove', async(ctx, next) => {
-    let postId = ctx.params.postId,
+    let momentId = ctx.params.postId,
         commentId = ctx.params.commentId,
         res_comments
-    console.log("scpl, ",[postId, commentId])
+  //  console.log("scpl, ",[momentId, commentId])
     await userModel.deleteComment(commentId)
         .then(() => {
-            console.log("yang sb")
             ctx.body = {
                 data: 1
             }
         }).catch(() => {
-            console.log("1 < 0")
             ctx.body = {
                 data: 2
             }
