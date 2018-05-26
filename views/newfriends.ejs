@@ -38,9 +38,16 @@
 							window.location.href="/moments"	  
 						},1000)
 				   }
-				   else{
+				   else if (msg.data == 2) {
 					   $('input').val('')
 					   fade('好友用户名不存在')               		
+				   }
+				   else if (msg.data == 3) {
+				   	   $('input').val('')
+					   fade('您已向 Ta 发送过请求，请耐心等待对方同意～') 
+					   setTimeout(()=>{
+							window.location.href="/moments"	  
+					   },1000)
 				   }
 				},
 				error: function () {
