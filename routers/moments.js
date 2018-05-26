@@ -89,12 +89,12 @@ router.get('/moments/:postId', async(ctx, next) => {
     console.log("ctx.params="+ctx.params.postId+", ctx.session="+ctx.session)
     await userModel.findMomentByMID(ctx.params.postId)
         .then(result => {
-            console.log(result)
+            console.log("findmoment"+result)
             res_moment = result
         })
     await userModel.findMomentCommentsByMID(ctx.params.postId)
         .then(result => {
-            console.log(result)
+            console.log("findcomment"+result)
             res = result
         })
     await ctx.render('comments', {
@@ -104,7 +104,6 @@ router.get('/moments/:postId', async(ctx, next) => {
         //comment_content: res[2],
         //comment_name: res[3],
         //id: res[4]
-        res_moment: res_moment,
         posts: res
     })
 
@@ -135,7 +134,7 @@ router.post('/:postId', async(ctx, next) => {
         content = ctx.request.body.content,
         momentID = ctx.params.postId
     
- //   console.log("fbpl, ",[uid, momentID, content])
+    console.log("fbpl, ",[uid, momentID, content])
     await userModel.insertComment([uid, momentID, content])
         .then(() => {
             ctx.body = true
@@ -149,7 +148,7 @@ router.post('/comment/:commentId/remove', async(ctx, next) => {
     let momentId = ctx.params.postId,
         commentId = ctx.params.commentId,
         res_comments
-  //  console.log("scpl, ",[momentId, commentId])
+    console.log("scpl, ",[momentId, commentId])
     await userModel.deleteComment(commentId)
         .then(() => {
             ctx.body = {
