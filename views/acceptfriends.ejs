@@ -2,6 +2,9 @@
 
 	<div class="container">
 		<ul class="posts">
+			<div>
+				<label>他们都在等待您同意好友请求哦</label> 
+			</div>
 			<% posts.forEach(function(res){ %>
 				<li>
 					<div class="friendname">
@@ -18,6 +21,23 @@
 			<% }) %>
 		</ul>
 		<div style="margin-top: 30px" class="pagination" id="page"></div>	
+	</div>
+
+	<div class="container">
+		<form class="form create" method="post">
+			<div>
+				<label>您可以在这里发送好友请求～</label> 
+			</div>
+			<div>
+				<label>好友用户名：</label> 
+				<input placeholder="请输入好友用户名" type="text" name="friendname">
+			</div>
+			<div>
+				<label>招呼：</label> 
+				<input placeholder="打一个招呼吧" type="text" name="greeting">
+			</div>
+			<div class="submit">发送好友请求</div>
+		</form>
 	</div>
 
 
