@@ -31,9 +31,10 @@ router.post('/acceptfriends/submit', async(ctx, next) => {
         .then(async (result) => {
             console.log('fri: ', user.friendname, ' ;res: ', result)
             if (result.length) {
-                console.log('Res ID: ', result[0].id)
+                console.log('Res ID: ', result[0].id, ' id: ', ctx.session.id)
                 await userModel.findRequestByUidFruid(ctx.session.id, result[0].id)
                     .then(async (res) =>{
+                        console.log("request "+res)
                         if (res.length) {
                             console.log('重复请求',res)
                             //重复请求
@@ -42,6 +43,8 @@ router.post('/acceptfriends/submit', async(ctx, next) => {
                             };
                         }
                         else {
+                            console.log("未重复")
+                            console.log('Res ID: ', result[0].id, ' id: ', ctx.session.id)
                             await userModel.alreadyFriends([ctx.session.id, result[0].id])
                                 .then(async(res) => {
                                     if (res.length) {
@@ -52,15 +55,18 @@ router.post('/acceptfriends/submit', async(ctx, next) => {
                                         }
                                     }
                                     else {
+                                        console.log("尝试发送 "+res)
+                                        console.log('Res ID: ', result[0].id, ' id: ', ctx.session.id)
                                         await userModel.insertRequest([ctx.session.id, result[0].id, user.greeting])
                                         .then(async (res)=>{
-                                            if (res.length) {
-                                                console.log('好友请求已发送',res)
+                                            console.log('好友请求已发送',res)
                                                 //注册成功
-                                                ctx.body = {
-                                                    data: 1
-                                                }
+                                            ctx.body = {
+                                                data: 1
                                             }
+                                        })
+                                        .catch (async(res) =>{
+                                            console.log('好友请求未发送',res)
                                         })
                                     }
                                 })
