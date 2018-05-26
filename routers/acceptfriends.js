@@ -26,21 +26,49 @@ router.post('/acceptfriends/submit', async(ctx, next) => {
         greeting: ctx.request.body.greeting,
     }
     //console.log(user.name);
+    // check if request has send before, do not allow re-send to the same person
     await userModel.findUserByName(user.friendname)
         .then(async (result) => {
             console.log('fri: ', user.friendname, ' ;res: ', result)
             if (result.length) {
                 console.log('Res ID: ', result[0].id)
-                await userModel.insertRequest([ctx.session.id, result[0].id, user.greeting])
-                    .then(res=>{
-                        console.log('好友请求已发送',res)
-                        //注册成功
-                        ctx.body = {
-                            data: 1
-                        };
+                await userModel.findRequestByUidFruid(ctx.session.id, result[0].id)
+                    .then(async (res) =>{
+                        if (res.length) {
+                            console.log('重复请求',res)
+                            //重复请求
+                            ctx.body = {
+                                data: 3
+                            };
+                        }
+                        else {
+                            await userModel.alreadyFriends([ctx.session.id, result[0].id])
+                                .then(async(res) => {
+                                    if (res.length) {
+                                        console.log('已经是好友了',res)
+                                        //注册成功
+                                        ctx.body = {
+                                        data: 4
+                                        }
+                                    }
+                                    else {
+                                        await userModel.insertRequest([ctx.session.id, result[0].id, user.greeting])
+                                        .then(async (res)=>{
+                                            if (res.length) {
+                                                console.log('好友请求已发送',res)
+                                                //注册成功
+                                                ctx.body = {
+                                                    data: 1
+                                                }
+                                            }
+                                        })
+                                    }
+                                })
+                        }
                     })
     
-            } else {
+            } 
+            else {
                 try {
                     throw Error('用户不存在')
                 } catch (error) {
@@ -50,7 +78,7 @@ router.post('/acceptfriends/submit', async(ctx, next) => {
                 // 用户不存在
                 ctx.body = {
                     data: 2
-                };;
+                }
             }
         })
 })
