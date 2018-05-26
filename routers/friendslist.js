@@ -21,19 +21,15 @@ router.get('/friendslist', async(ctx, next) => {
 
 
 // 删除好友
-router.post('/acceptfriends/:rid/remove', async(ctx, next) => {
-    let requestId = ctx.params.rid
-    console.log("scqq "+ requestId)
-    await userModel.deleteRequest(requestId)
+router.post('/friendslist/:rid/remove', async(ctx, next) => {
+    let uid = ctx.params.rid
+    console.log("scqq "+ uid + ctx.session.id)
+    let value = [uid, ctx.session.id, ctx.session.id, uid]
+    await userModel.deleteFriend(value)
         .then(() => {
             console.log("ming sb")
             ctx.body = {
                 data: 1
-            }
-        }).catch(() => {
-            console.log("sb ming")
-            ctx.body = {
-                data: 2
             }
         })
     
