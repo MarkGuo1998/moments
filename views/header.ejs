@@ -61,9 +61,9 @@
 						<a href="/moments">全部动态</a>
 					<% }%>
 					<% if(type == 'my'){ %>
-						<a class="active" href="/moments?author=<%= session.user %>">我的动态</a>
+						<a class="active" href="/moments?author=<%= session.user %>">动态主页</a>
 					<% }else{ %>
-						<a href="/moments?author=<%= session.user %>">我的动态</a>
+						<a href="/moments?author=<%= session.user %>">动态主页</a>
 					<% }%>
 					<% if(type == 'friends'){ %>
 						<a class="active" href="/friendmoments">好友动态</a>
@@ -79,6 +79,11 @@
 						<a class="active" href="/newfriends">添加好友</a>
 					<% }else{ %>
 						<a href="/newfriends">添加好友</a>
+					<% }%>
+					<% if(type == 'friendslist'){ %>
+						<a class="active" href="/friendslist">好友列表</a>
+					<% }else{ %>
+						<a href="/friendslist">好友列表</a>
 					<% }%>
 					<% if(type == 'acceptfriends'){ %>
 						<a class="active" href="/acceptfriends">查看好友请求</a>
