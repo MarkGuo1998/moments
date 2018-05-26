@@ -5,13 +5,9 @@
 			<% posts.forEach(function(res){ %>
 				<li>
 					<div class="friendname">
-						<span title="<%= res.name %>"><a href="/moments?author=<%= res.name %> ">待加好友名：<%= res.name %></a></span>
-					</div>
-					<div class="content markdown">
-						<%- res.greeting %>
+						<span title="<%= res.name %>"><a href="/moments?author=<%= res.name %> ">好友名：<%= res.name %></a></span>
 					</div>
                     <span class="cmt_name">
-						<a class="delete_comment" href="javascript:accept_request(<%= res['rid'] %>);"> 通过</a>
                         <a class="delete_comment" href="javascript:delete_request(<%= res['rid'] %>);"> 删除</a>
 				    </span>
 				</li>
@@ -28,34 +24,6 @@
 				$('.submit').click()
 			}
 		})
-		$('.submit').click(()=>{
-			// console.log($('.form').serialize())
-			$.ajax({
-				url: "/acceptfriends/submit",
-				data: {
-					friendname: $('input[name=friendname]').val(),
-					greeting: $('input[name=greeting]').val()
-				},
-				type: "POST",
-				cache: false,
-				dataType: 'json',
-				success: function (msg) {
-				   if (msg.data == 1) {
-				   		fade('请求已成功发送')
-						setTimeout(()=>{
-							window.location.href="/moments"	  
-						},1000)
-				   }
-				   else{
-					   $('input').val('')
-					   fade('好友用户名不存在')               		
-				   }
-				},
-				error: function () {
-					alert('异常');
-				}
-			})			
-		})		
         
         // 删除好友请求
 		function delete_request(id, isaccept) {
@@ -82,34 +50,6 @@
 				},
 				error: function () {
 					alert('删除请求异常')
-				}
-			})
-		}
-        
-        // 通过好友请求
-		function accept_request(id) {
-			$.ajax({
-				url: "/acceptfriends/" + id + "/accept",
-                data: {
-                    rid: id
-                },
-				type: 'POST',
-				cache: false,
-				success: function (msg) {
-					if (msg.data == 1) {
-						fade('通过请求成功')
-						setTimeout(() => {
-							window.location.reload()
-						}, 1000)
-					} else if (msg.data == 2) {
-						fade('通过请求失败');
-						setTimeout(() => {
-							window.location.reload()
-						}, 1500)
-					}
-				},
-				error: function () {
-					alert('通过请求异常')
 				}
 			})
 		}
