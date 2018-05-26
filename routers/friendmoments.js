@@ -1,74 +1,53 @@
 const router = require('koa-router')();
-const userModel = require('../lib/mysql.js');
-const md5 = require('md5')
+const userModel = require('../lib/mysql.js')
 const checkNotLogin = require('../middlewares/check.js').checkNotLogin
-const checkLogin = require('../middlewares/check.js').checkLogin
-// const moment = require('moment');
-const fs = require('fs')
+const checkLogin = require('../middlewares/check.js').checkLogin;
+// 重置到文章页
+router.get('/', async(ctx, next) => {
+    ctx.redirect('/friendmoments')
+})
 // 
 router.get('/friendmoments', async(ctx, next) => {
-    //await checkNotLogin(ctx)
-    await ctx.render('friendmoments', {
-        session: ctx.session,
-    })
+    console.log("user!!!")
+    let res,
+        name = decodeURIComponent(ctx.request.querystring.split('=')[1]),
+        user = decodeURIComponent(ctx.session.user)
+    console.log("user, "+user)
+    if (ctx.request.querystring) {
+        console.log('ctx.request.querystring', name)
+        await userModel.findMomentsByName(name)
+            .then(result => {
+                res = result
+            })
+        await ctx.render('selfMoments', {
+            session: ctx.session,
+            posts: res
+        })
+    } else {
+        console.log('ALLMOMENTS')
+        
+        await userModel.findAllMoments()
+            .then(result=>{
+                res = result
+            }) 
+        console.log('全部票圈'+res[1])
+        await ctx.render('friendmoments', {
+            session: ctx.session,
+            posts: res
+        })
+    }
 })
 
-// post 添加好友请求
-router.post('/newfriends/submit', async(ctx, next) => {
-//console.log(ctx.request.body)
-    let user = {
-        friendname: ctx.request.body.friendname,
-        greeting: ctx.request.body.greeting,
-    }
-    // check if request has send before, do not allow re-send to the same person
-    await userModel.findUserByName(user.friendname)
-        .then(async (result) => {
-            console.log('fri: ', user.friendname, ' ;res: ', result)
-            if (result.length) {
-                console.log('Res ID: ', result[0].id)
-                await userModel.findRequestByUidFruid(ctx.session.id, result[0].id)
-                    .then(async (res) =>{
-                        if (res.length) {
-                            console.log('重复请求',res)
-                            //重复请求
-                            ctx.body = {
-                                data: 3
-                            };
-                        }
-                        else{
-                            await userModel.insertRequest([ctx.session.id, result[0].id, user.greeting])
-                                .then(async (res)=>{
-                                    if (res.length) {
-                                        console.log('好友请求已发送',res)
-                                        //注册成功
-                                        ctx.body = {
-                                        data: 1
-                                        }
-                                    }
-                                    else {
-                                        console.log('已经是好友了',res)
-                                        //注册成功
-                                        ctx.body = {
-                                        data: 4
-                                        }
-                                    }
-                                })
-                        }
-                    })
-    
-            } else {
-                try {
-                    throw Error('用户不存在')
-                } catch (error) {
-                    //处理err
-                    console.log(error)
-                }
-                // 用户不存在
-                ctx.body = {
-                    data: 2
-                };;
-            }
-        })
+// 首页
+router.post('/friendmoments', async(ctx, next) => {
+    await userModel.findAllMoments()
+            .then(result=>{
+                console.log("首页，"+result)
+                ctx.body = result   
+            }).catch(()=>{
+                ctx.body = 'error'
+            })  
 })
+
 
 module.exports = router

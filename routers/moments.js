@@ -163,4 +163,4 @@ router.post('/comment/:commentId/remove', async(ctx, next) => {
     
 })
 
-
+module.exports = router

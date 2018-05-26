@@ -1,63 +1,60 @@
 <%- include("header",{type:'friends'}) %>
 	<div class="container">
-		<form class="form create" method="post">
-			<div>
-				<label>好友用户名：</label> 
-				<input placeholder="请输入好友用户名" type="text" name="friendname">
-			</div>
-			<div>
-				<label>招呼：</label> 
-				<input placeholder="打一个招呼吧" type="text" name="greeting">
-			</div>
-			<div class="submit">发送好友请求</div>
-		</form>
+		<ul class="posts">
+			<% posts.forEach(function(res){ %>
+				<li>
+					<div class="author">
+						<span title="<%= res.name %>"><a href="/moments?author=<%= res.name %> ">作者：<%= res.name %></a></span>
+					</div>
+					<a href="/moments/<%= res.id %>">
+						<div class="content markdown">
+							<%- res.content %>
+						</div>
+					</a>
+				</li>
+			<% }) %>
+		</ul>
+		<div style="margin-top: 30px" class="pagination" id="page"></div>	
 	</div>
-	
-    <script>
-		$(window).keyup(function (e) {
-			//console.log(e.keyCode)
-			if (e.keyCode == 13) {
-				$('.submit').click()
-			}
-		})
-		$('.submit').click(()=>{
-			// console.log($('.form').serialize())
-			$.ajax({
-				url: "/newfriends/submit",
-				data: {
-					friendname: $('input[name=friendname]').val(),
-					greeting: $('input[name=greeting]').val()
-				},
-				type: "POST",
-				cache: false,
-				dataType: 'json',
-				success: function (msg) {
-				   if (msg.data == 1) {
-				   		fade('请求已成功发送')
-						setTimeout(()=>{
-							window.location.href="/moments"	  
-						},1000)
-				   }
-				   else if (msg.data == 2) {
-					   $('input').val('')
-					   fade('好友用户名不存在')
-				   }
-				   else if (msg.data == 3) {
-				   	   $('input').val('')
-					   fade('你们已发送过请求，请查看待处理请求确认，或耐心等待对方同意～') 
-					   setTimeout(()=>{
-							window.location.href="/moments"	  
-					   },1000)
-				   }
-                    else if (msg.data == 4) {
-                        $('input').val('')
-					   fade('你们已经是好友了！') 
-                    }
-				},
-				error: function () {
-					alert('异常');
-				}
-			})			
-		})		
+    
+	<script>
+		$.ajax({
+            url: "friendmoments",
+            type: 'POST',
+            data:{
+                page: 0
+            },
+            cache: false,
+            success: function (msg) {
+                //console.log("msg!, "+msg)
+                if (msg != 'error') {
+                    $('.moments').html(' ')
+                    $.each(msg,function(i,val){
+                        //console.log(val.content)
+                        $('.moments').append(
+                            '<li>'+
+                            '<div class=\"author\">'+
+                            '<span title=\"'+ val.name +'\"><a href=\"/moments?author='+ val.name +' \">author: '+ val.name +'</a></span>'+
+                            //'<span>评论数：'+ val.comments +'</span>'+
+                            //'<span>浏览量：'+ val.pv +'</span>'+
+                            '</div>'+
+                            '<span>'+ val.moment +'</span>'+
+                            '</div>'+
+                            '<a href=\"/moments/'+ val.id +'\">'+
+                            '<div class=\"title\">'+
+                            val.title +
+                            '</div>'+
+                            '<div class=\"content\">'+
+                            val.content +
+                            '</div>'+
+                            '</a>'+
+                            '</li>'
+                        )
+                    })
+                } else {
+                    alert('分页不存在')
+                } 
+            }
+        })
 	</script>
 <% include footer %>
