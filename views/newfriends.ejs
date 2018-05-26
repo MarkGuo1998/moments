@@ -1,0 +1,63 @@
+<%- include("header",{type:'newfriends'}) %>
+	<div class="container">
+		<form class="form create" method="post">
+			<div>
+				<label>好友用户名：</label> 
+				<input placeholder="请输入好友用户名" type="text" name="friendname">
+			</div>
+			<div>
+				<label>招呼：</label> 
+				<input placeholder="打一个招呼吧" type="text" name="greeting">
+			</div>
+			<div class="submit">发送好友请求</div>
+		</form>
+	</div>
+	
+    <script>
+		$(window).keyup(function (e) {
+			//console.log(e.keyCode)
+			if (e.keyCode == 13) {
+				$('.submit').click()
+			}
+		})
+		$('.submit').click(()=>{
+			// console.log($('.form').serialize())
+			$.ajax({
+				url: "/newfriends/submit",
+				data: {
+					friendname: $('input[name=friendname]').val(),
+					greeting: $('input[name=greeting]').val()
+				},
+				type: "POST",
+				cache: false,
+				dataType: 'json',
+				success: function (msg) {
+				   if (msg.data == 1) {
+				   		fade('请求已成功发送')
+						setTimeout(()=>{
+							window.location.href="/moments"	  
+						},1000)
+				   }
+				   else if (msg.data == 2) {
+					   $('input').val('')
+					   fade('好友用户名不存在')
+				   }
+				   else if (msg.data == 3) {
+				   	   $('input').val('')
+					   fade('你们已发送过请求，请查看待处理请求确认，或耐心等待对方同意～') 
+					   setTimeout(()=>{
+							window.location.href="/moments"	  
+					   },1000)
+				   }
+                    else if (msg.data == 4) {
+                        $('input').val('')
+					   fade('你们已经是好友了！') 
+                    }
+				},
+				error: function () {
+					alert('异常');
+				}
+			})			
+		})		
+	</script>
+<% include footer %>

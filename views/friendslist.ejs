@@ -8,7 +8,7 @@
 						<span title="<%= res.name %>"><a href="/moments?author=<%= res.name %> ">好友名：<%= res.name %></a></span>
 					</div>
                     <span class="cmt_name">
-                        <a class="delete_comment" href="javascript:delete_request(<%= res['rid'] %>);"> 删除</a>
+                        <a class="delete_comment" href="javascript:delete_request(<%= res.id %>);"> 删除</a>
 				    </span>
 				</li>
 			<% }) %>
@@ -26,9 +26,9 @@
 		})
         
         // 删除好友请求
-		function delete_request(id, isaccept) {
+		function delete_request(id) {
 			$.ajax({
-				url: "/acceptfriends/" + id + "/remove",
+				url: "/friendslist/" + id + "/remove",
                 data: {
                     rid: id
                 },
