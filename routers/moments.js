@@ -85,7 +85,7 @@ router.post('/create', async(ctx, next) => {
 
 // 单篇文章页
 router.get('/moments/:postId', async(ctx, next) => {
-    let res;
+    let res, res_;
     console.log("ctx.params="+ctx.params.postId+", ctx.session="+ctx.session)
     await userModel.findMomentByMID(ctx.params.postId)
         .then(result => {
@@ -97,6 +97,11 @@ router.get('/moments/:postId', async(ctx, next) => {
             console.log("findcomment"+result)
             res = result
         })
+    await userModel.findLikesByMid(ctx.params.postId)
+        .then(result => {
+            console.log("findlikes"+result)
+            res_ = result
+        })
     await ctx.render('comments', {
         session: ctx.session,
         //moment_content: res[0],
@@ -104,8 +109,10 @@ router.get('/moments/:postId', async(ctx, next) => {
         //comment_content: res[2],
         //comment_name: res[3],
         //id: res[4]
-        posts: res
+        posts: res,
+        likes: res_
     })
+    
 
 
 })

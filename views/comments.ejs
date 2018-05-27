@@ -25,6 +25,18 @@
 
 	<div class="container">
 		<ul class="posts">
+            <% posts.forEach(function(res_){ %>
+				<li>
+					<div class="cauthor">
+						<span title="<%= res_.name %>"><a href="/moments?author=<%= res_.id %> "><%= res_.name %></a></span>
+					</div>
+				</li>
+			<% }) %>
+		</ul>
+	</div>
+
+	<div class="container">
+		<ul class="posts">
 			<% posts.forEach(function(res){ %>
 				<li>
 					<div class="cauthor">
@@ -75,8 +87,35 @@
                 console.log("msg!, "+msg)
                 if (msg != 'error') {
                     $('.moments').html(' ')
-                    $.each(msg,function(i,val){
-                        //console.log(val.content)
+                    console.log("??")
+                    $.each(msg, function(i, val, val_){
+                        //console.log("??")
+                        $('.moments').append(
+                            '<li>'+
+                            '<div class=\"author\">'+
+                            '<span title=\"'+ val_.name +'\"><a href=\"/moments?author='+ val_.name +' \">author: '+ val_.name +'</a></span>'+
+                            //'<span>评论数：'+ val.comments +'</span>'+
+                            //'<span>浏览量：'+ val.pv +'</span>'+
+                            '</div>'+
+                            '<div class=\"comment_pv\">'+
+                            '<span>'+ val_.id +'</span>'+
+                            '</div>'+
+                            '<a href=\"/moments/'+ val_.id +'\">'+
+                            '<div class=\"title\">'+
+                            val_.name +
+                            '</div>'+
+                            '<div class=\"title\">'+
+                            val_.name +
+                            '</div>'+
+                            '<div class=\"content\">'+
+                            val_.name +
+                            '</div>'+
+                            '</a>'+
+                            '</li>'
+                        )
+                    })
+                    $.each(msg, function(i, val, val_){
+                        console.log("!!"+val.content)
                         $('.moments').append(
                             '<li>'+
                             '<div class=\"author\">'+
@@ -101,7 +140,7 @@
                             '</li>'
                         )
                     })
-                }else{
+                } else{
                     alert('分页不存在')
                 } 
             }
