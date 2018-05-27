@@ -162,4 +162,21 @@ router.post('/comment/:commentId/remove', async(ctx, next) => {
     
 })
 
+// 点赞单篇文章
+router.post('/moments/:postId/like', async(ctx, next) => {
+    let momentId = ctx.params.postId,
+        uid = ctx.session.id
+        
+    await userModel.insertLike([momentId, uid])
+        .then(() => {
+            ctx.body = {
+                data: 1
+            }
+        }).catch(() => {
+            ctx.body = {
+                data: 2
+            }
+        })
+})
+
 module.exports = router

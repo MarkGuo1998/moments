@@ -15,8 +15,8 @@
                     <div class="edit">
 					    <% if(session && decodeURIComponent(session.user) ===  res_moment.name){ %>
 					    <p><a class="delete_post" href="javascript:delete_post(<%= res_moment['id'] %>);">删除</a></p>
-                        <p><a href="<%= res_moment['id'] %>/edit">赞</a> <a class="delete_post" href="javascript:delete_post(<%= res_moment['id'] %>);">觉得欢乐</a></p>
 					   <% } %>
+                         <p><a a class="delete_post" href="javascript:like(<%= res_moment['id'] %>);">赞</a></p>
 				    </div>
 				</li>
 			<% }) %>
@@ -190,5 +190,30 @@
 				}
 			})
 		}
+        
+        // 点赞
+        function like(id) {
+            $.ajax({
+				url: "/moments/" + id + "/like",
+				type: 'POST',
+				cache: false,
+				success: function (msg) {
+					if (msg.data == 1) {
+						fade('点赞成功')
+						setTimeout(() => {
+							window.location.reload()
+						}, 1000)
+					} else if (msg.data == 2) {
+						fade('点赞失败');
+						setTimeout(() => {
+							window.location.reload()
+						}, 1500)
+					}
+				},
+				error: function () {
+					alert('点赞异常')
+				}
+			})
+        }
 	</script>
 <% include footer %>
