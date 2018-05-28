@@ -1,4 +1,4 @@
 # moments
 A blog-like project using B/S structure
 
-“报告”目录为文档及分工，其余目录为代码
+CSS / webpage structure references:[《Node+Koa2+Mysql 搭建简易博客》](http://www.wclimb.site/2017/07/12/Node-Koa2-Mysql-搭建简易博客/)
